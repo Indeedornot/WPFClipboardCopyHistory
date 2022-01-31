@@ -1,0 +1,126 @@
+﻿<mah:MetroWindow
+    x:Class="ClipboardCopyHistory.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClipboardCopyHistory"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+
+        <!--  Unround button corners  -->
+        <Style TargetType="Button">
+            <Setter Property="Border.CornerRadius" Value="0" />
+        </Style>
+        <Style TargetType="ListView">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ListView
+            x:Name="HistoryListView"
+            Grid.Row="0"
+            Grid.Column="0"
+            SelectionMode="Extended">
+            <!--
+            <ListView.Style>
+                <Style TargetType="ComboBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=SelectedItem, ElementName=first}" Value="1">
+                            <Setter Property="ItemsSource" Value="{Binding Something}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Style>
+            -->
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Width="65"
+                        Header="Content"
+                        HeaderStringFormat="Content" />
+                    <GridViewColumn
+                        Width="*"
+                        Header="Time"
+                        HeaderStringFormat="Time" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                x:Name="RemoveSelectedButton"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                Content="Remove" />
+            <Button
+                x:Name="RemoveAllButton"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                Content="Restart" />
+            <Button
+                x:Name="SaveButton"
+                Grid.Column="2"
+                HorizontalAlignment="Stretch"
+                Content="Save" />
+            <Button
+                x:Name="ReadButton"
+                Grid.Column="3"
+                HorizontalAlignment="Stretch"
+                Content="Read" />
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <TextBlock
+                x:Name="TypesText"
+                Width="111"
+                Margin="0,5,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Text="Types"
+                TextWrapping="Wrap" />
+            <CheckBox
+                x:Name="TextCheckBox"
+                Margin="0,26,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Text" />
+            <CheckBox
+                x:Name="ImageCheckBox"
+                Margin="0,46,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Image" />
+            <CheckBox
+                x:Name="FileCheckBox"
+                Margin="0,66,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="File" />
+        </Grid>
+    </Grid>
+</mah:MetroWindow>
