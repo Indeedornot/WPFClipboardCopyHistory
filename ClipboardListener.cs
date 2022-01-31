@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using WK.Libraries.SharpClipboardNS;
 
 namespace ClipboardCopyHistory
 {
-    public sealed class ClipboardListener
+    public class ClipboardListener
     {
         private readonly SharpClipboard _clipboard = new();
         private readonly List<SharpClipboard.ContentTypes> _listenTypes = new();
-        public List<ClipboardData> History { get; } = new();
+        public ClipboardData DataSample = new("content", "date");
+
+        public ClipboardListener()
+        {
+            _clipboard.ClipboardChanged += Listener;
+        }
+
+        public ObservableCollection<ClipboardData> History { get; } = new();
 
         public void TypeChange(string type)
         {
@@ -41,6 +49,7 @@ namespace ClipboardCopyHistory
                         DateTime.Now.ToString(CultureInfo.InvariantCulture));
                     History.Add(data);
                     OnClipboardDataReceive(data);
+                    Debug.WriteLine("got Text");
                     break;
                 }
                 case SharpClipboard.ContentTypes.Image:
@@ -61,18 +70,17 @@ namespace ClipboardCopyHistory
         }
 
         public event EventHandler<ClipboardData> DataReceived;
+    }
 
-        public class ClipboardData
+    public struct ClipboardData
+    {
+        public string Content { get; }
+        public string Date { get; }
+
+        public ClipboardData(string content, string date)
         {
-            public ClipboardData(string content, string date)
-            {
-                Content = content;
-                Date = date;
-            }
-
-            private string Content { get; }
-
-            private string Date { get; }
+            Content = content;
+            Date = date;
         }
     }
 }
